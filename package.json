@@ -1,0 +1,23 @@
+{
+  "name": "node_GraphQL",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LEEHyokyun/node_GraphQL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LEEHyokyun/node_GraphQL/issues"
+  },
+  "homepage": "https://github.com/LEEHyokyun/node_GraphQL#readme",
+  "dependencies": {
+    "graphql": "^15.5.0"
+  }
+}
