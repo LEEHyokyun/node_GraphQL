@@ -3,6 +3,7 @@ const { graphql, buildSchema } = require("graphql");
 //Query 생성
 //Query인 hello 생성 .. 이에 대한 응답은 String이다.
 //Query문이 그대로 express 서버로 request 전달.
+//이에 대한 응답이 전달
 const schema = buildSchema(`
     type Query{
         hello : String,
