@@ -6,9 +6,22 @@ const { buildSchema } = require("graphql");
 //schema를 구성하는 data 요소들을 작성해준다
 //type Query data 이름{data}
 //! = 필수필드
+
+//type인지 input인지 확인!
+
+//Mutation : 입력을 받고, Product를 보여준다(return까지)
+//Mutation으로 설언된 addProdct Query를, graphql query에 입력하여 그대로 데이터를 추가할 수 있는 것
+
+//데이터추가시 이용하는 Query문(Mutation으로 선언된 addProduct Query 이용)
+/*{
+  "query" : "mutation addProduct($input:ProductInput) {addProduct(input : $input) {id} }",
+  "variables" : { "input" : {"name" : "녹차", "price" : 3000, "description" : "롯데마트 녹차 3000원"}}
+}
+*/
+
 const schema = buildSchema(`
 
-    type ProductInput{
+    input ProductInput{
       name : String
       price : Int
       description : String
@@ -22,7 +35,7 @@ const schema = buildSchema(`
     }
 
     type Query{
-        getProduct (id : ID! ) : Product  
+        getProduct (id : ID! ) : Product
       }
 
     type Mutation{
@@ -63,7 +76,9 @@ const root = {
 
   addProduct: ({ input }) => {
     //data를 추가하면서, input한 data 항목에 id 추가
-    input.id = parseInt(product.length + 1);
+    //현재 Product data(list)에 id를 추가하면서 data를 추가하는 과정임
+    //현재 받은 길이에 + 1이 최초 입력(추가)하는 id가 된다.
+    input.id = parseInt(products.length + 1);
     products.push(input);
 
     return root.getProduct({ id: input.id });
