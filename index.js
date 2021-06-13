@@ -19,11 +19,19 @@ const { buildSchema } = require("graphql");
 }
 */
 
-//데이터업데이트시 이용하는 Quert문(이 역시 Mutation을 통해 선언됨)
+//데이터업데이트시 이용하는 Query문(이 역시 Mutation을 통해 선언됨)
 /*
 {
     "query" : "mutation updateProduct( $id : ID!, $input : ProductInput!) {updateProduct(id : $id, input : $input) {id} }",
     "variables" : { "id" : 2, "input" : {"name" : "사과", "price" : 3500, "description" : "롯데마트 사과 3500원(수정)"}}
+}
+*/
+
+//데이터삭제시 이용하는 Query문
+/*
+{
+    "query" : "mutation deleteProduct( $id : ID!) {deleteProduct(id : $id)}",
+    "variables" : { "id" : 2} 
 }
 */
 
@@ -49,6 +57,7 @@ const schema = buildSchema(`
     type Mutation{
       addProduct( input : ProductInput ) : Product
       updateProduct( id: ID!, input : ProductInput! ) : Product
+      deleteProduct( id: ID!) : String
     }
     
 
@@ -104,6 +113,14 @@ const root = {
       ...input,
     };
     return products[index];
+  },
+
+  deleteProduct: ({ id }) => {
+    const index = products.findIndex((product) => product.id === parseInt(id));
+    //해당 인덱스를 받아 인덱스로부터 n번째의 항목을 삭제한다
+    products.splice(index, 1);
+
+    return "removed data";
   },
 };
 
