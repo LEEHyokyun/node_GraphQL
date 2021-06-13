@@ -9,6 +9,8 @@
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
+    //get 요청
+    /*
     axios.get('http://localhost:4000/graphql', {
         params : {
             query : "{ getProduct( id:1 ) { name price } }"
@@ -16,7 +18,16 @@
     }).then (function(result){
         //console로 data확인
         console.log(result)
-    })  
+    })
+    */
+   //post 요청
+   axios.post('http://localhost:4000/graphql', {
+        "query" : "mutation addProduct($input:ProductInput) {addProduct(input : $input) {id} }",
+        "variables" : { "input" : {"name" : "녹차", "price" : 3000, "description" : "롯데마트 녹차 3000원"}}
+    }).then (function(result){
+        //console로 data확인
+        console.log(result)
+    })
     </script>
 </body>
 </html>
