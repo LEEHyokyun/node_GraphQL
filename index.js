@@ -19,6 +19,14 @@ const { buildSchema } = require("graphql");
 }
 */
 
+//데이터업데이트시 이용하는 Quert문(이 역시 Mutation을 통해 선언됨)
+/*
+{
+    "query" : "mutation updateProduct( $id : ID!, $input : ProductInput!) {updateProduct(id : $id, input : $input) {id} }",
+    "variables" : { "id" : 2, "input" : {"name" : "사과", "price" : 3500, "description" : "롯데마트 사과 3500원(수정)"}}
+}
+*/
+
 const schema = buildSchema(`
 
     input ProductInput{
@@ -40,8 +48,10 @@ const schema = buildSchema(`
 
     type Mutation{
       addProduct( input : ProductInput ) : Product
+      updateProduct( id: ID!, input : ProductInput! ) : Product
     }
     
+
 `);
 
 //임의의 data
@@ -82,6 +92,18 @@ const root = {
     products.push(input);
 
     return root.getProduct({ id: input.id });
+  },
+
+  //id, input(data)를 인자로 받고,
+  //먼저 인덱스를 찾는다(findIndex함수)
+  //products(배열)의 인덱스를 통해 해당 vairable에 접근하여 update한다
+  updateProduct: ({ id, input }) => {
+    const index = products.findIndex((product) => product.id === parseInt(id));
+    products[index] = {
+      id: parseInt(id),
+      ...input,
+    };
+    return products[index];
   },
 };
 
