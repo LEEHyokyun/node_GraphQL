@@ -136,6 +136,10 @@ app.use(
   })
 );
 
+//graphql의 프론트앤드에서 사용하기 위한 static code
+//static 폴더활용!
+app.use("/static", express.static("static"));
+
 app.listen(4000, () => {
   console.log("Run Server");
 });
